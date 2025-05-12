@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Lista de Contatos</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="titulo-pagina-variante" style="margin-right: 10px;">Lista de Contatos</h1>
+
+    <a href="{{ url_for('add_contact_page') }}" class="btn btn-primary mb-3" style="margin-left: 855px; margin-top: 15px;">Adicionar Novo Contato</a>
+
+    {% if contacts %}
+    <div class="container">
+        <div class="row">
+            {% for contact in contacts %}
+                <div class="col-12 mb-3">
+                    <div class="card-centralizado">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ contact.name }}</h5>
+                            <p class="card-text"><strong>Email:</strong> {{ contact.email }}</p>
+                            <p class="card-text"><strong>Celular:</strong> {{ contact.phone }}</p>
+
+                            <a href="{{ url_for('send_message_page', contact_id=contact.id) }}" class="btn btn-success mt-3" style="border-radius: 0px;">Enviar Mensagem</a>
+                            {% if contact.messages|length > 0 %}
+                                <a href="{{ url_for('view_messages', contact_id=contact.id) }}" class="btn btn-info mt-3" style="border-radius: 0px;">Ver Mensagens</a>
+                            {% endif %}
+                            <a href="{{ url_for('edit_contact_page', contact_id=contact.id) }}" class="btn btn-warning mt-3" style="border-radius: 0px;">Editar Contato</a>
+                            
+                        </div>
+                        <a href="#" onclick="confirmDelete({{ contact.id }})" class="btn btn-custom2" style="border-radius: 0px;">Excluir contato</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <p class="text-custom text-center">Nenhum contato encontrado.</p>
+    {% endif %}
+
+    <script>
+        function confirmDelete(contactId) {
+            let confirmacao = confirm("Tem certeza que deseja excluir este contato? Essa ação não pode ser desfeita!");
+            if (confirmacao) {
+                window.location.href = "/delete_contact/" + contactId;
+            }
+        }
+    </script>
+
+{% endblock %}

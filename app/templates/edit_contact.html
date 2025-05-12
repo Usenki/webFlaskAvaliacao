@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Editar Contato</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="titulo-pagina-variante">Editar Contato</h1>
+
+    <form class="form-centralizado" method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome</label>
+            <input type="text" class="form-control mt-3" name="name" value="{{ contact.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control mt-3" name="email" value="{{ contact.email }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Celular</label>
+            <input type="text" class="form-control mt-3" name="phone" value="{{ contact.phone }}" required>
+        </div>
+        <button type="submit" class="btn btn-success mt-5" style="width: 200px; margin-left: 275px;">Salvar Alterações</button>
+    </form>
+{% endblock %}

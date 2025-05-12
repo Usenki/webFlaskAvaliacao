@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Mensagens - {{ contact.name }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="titulo-pagina-variante" style="margin-right: 10px;">Mensagens para {{ contact.name }}</h1>
+
+    
+    <a href="{{ url_for('send_message_page', contact_id=contact.id) }}" style="margin-left: 875px;margin-top: 20px;" class="btn btn-success mb-3">Nova Mensagem</a>
+    {% if messages %}
+    <div class="container">
+        <div class="row">
+            {% for message in messages %}
+                <div class="col-12 mb-3">
+                    <div class="card-centralizado">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ message.title }}</h5>
+                            <p class="card-text">{{ message.text }}</p>
+                            <p><strong>Data:</strong> {{ message.date_sent.strftime('%d/%m/%Y %H:%M') }}</p>
+                            <a href="{{ url_for('delete_message', message_id=message.id) }}" class="btn btn-danger">Excluir</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p class="text-custom text-center">Nenhuma mensagem encontrada para este contato.</p>
+{% endif %}
+
+{% endblock %}
